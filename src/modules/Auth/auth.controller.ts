@@ -1,7 +1,10 @@
-import { Body, Controller, Post, Put, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Put, Req, Res, UseGuards, UsePipes } from "@nestjs/common";
 import { authService } from "./auth.service";
 import { Request, Response } from "express";
 import { AuthGuard } from "src/Guards/auth.guards";
+import { ZodValidationPipe } from "src/pipes/validation.pipe";
+import { signUpScehma } from "./auth.validationSchema";
+import { signupBodyDto } from "./auth.dto";
 
 @Controller({ path: '/auth' })
 export class authController{
@@ -9,10 +12,11 @@ export class authController{
         private readonly signupService :authService
     ){}
     @Post('signup')
+    @UsePipes(new ZodValidationPipe(signUpScehma))
     signUp( 
-        @Req() req:Request ,
+        @Req() req:signupBodyDto,
         @Res() res:Response    
-    ){
+    ): Promise<object>{
      return this.signupService.signUp(req , res)
     }
     //log in handler 
