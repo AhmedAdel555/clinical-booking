@@ -24,7 +24,7 @@ export class authService{
            ,gender
            ,password
            ,confirm_password
-        }=req.body 
+        }=req
         
         const nameExit = await this.usermodel.findOne({ name})
         if(nameExit){
