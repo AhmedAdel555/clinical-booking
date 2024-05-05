@@ -1,9 +1,11 @@
 import * as bcryptjs from 'bcryptjs';
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UsePipes } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User } from "src/DB/Schemas/user.schema";
 import { JwtService } from '@nestjs/jwt';
+import { ZodValidationPipe } from 'src/pipes/validation.pipe';
+import { signUpScehma } from './auth.validationSchema';
 
 @Injectable()
 export class authService{
@@ -12,6 +14,7 @@ export class authService{
         private jwtService: JwtService
     ){}
 //sign up api
+
     async signUp(req : any , res:any) :Promise<object>{ 
        const {name
          , age 
