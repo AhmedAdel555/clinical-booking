@@ -68,7 +68,8 @@ export class authService{
 
         const token = this.jwtService.sign({
             email: userExists['email'],
-            id: userExists['_id']
+            id: userExists['_id'],
+            role:userExists['role']
         }, {
             secret: 'login'
         })
