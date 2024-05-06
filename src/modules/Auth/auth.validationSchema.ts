@@ -17,7 +17,7 @@ export const signUpScehma = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'your password must match cpass',
-        path: ['cPass'],
+        path: ['confirm_password'],
       });
     }
   });
