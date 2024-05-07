@@ -41,6 +41,11 @@ export class User {
     required: true,
   })
   password: string;
+  @Prop({
+    type: String,
+    required: true,
+  })
+  confirm_password: string;
 
   @Prop({
     type: boolean,
@@ -48,10 +53,10 @@ export class User {
   })
   status: string;
 
-  @Prop({
+ /* @Prop({
     type: { type: Types.ObjectId, ref: 'Permission' }
   })
-  permission: Permission;
+  permission: Permission;*/
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

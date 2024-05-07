@@ -6,10 +6,17 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
+  IS_NUMBER,
+  IS_BOOLEAN,
+  IsBoolean,
 } from 'class-validator';
 
 // dto, signup , body
 export class signupBodyDto {
+  @IsNumber()
+  NationalId: number;
+  @IsNumber()
+  phone: number;
   @IsString()
   @MinLength(3, {
     message: 'your name must be at least 3 chars',
@@ -17,7 +24,7 @@ export class signupBodyDto {
   @MaxLength(10, {
     message: 'your name mustnot exceed 10 chars',
   })
-  name: string;
+  username: string;
 
   @IsString()
   email: string;
@@ -25,12 +32,12 @@ export class signupBodyDto {
   @IsString()
   @IsNotEmpty()
   password: string;
-
-  @IsNumber()
-  age: number;
-
   @IsString()
-  @IsEnum(['female', 'male'])
-  @IsOptional()
-  gender: string;
+  @IsNotEmpty()
+  confirm_password: string;
+  @IsBoolean()
+  status:boolean;
+ // @IsNotEmpty()
+  //permission:Permissions
+
 }

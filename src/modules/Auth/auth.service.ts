@@ -13,22 +13,19 @@ export class authService {
   ) {}
   //sign up api
 
-  async signUp(req: any, res: any): Promise<object> {
+  async signUp(body: any, res: any): Promise<object> {
     const {
-      name,
-      age,
+      NationalId,
+      username,
       phone,
       email,
-      role,
-      gender,
       password,
       confirm_password,
-    } = req;
+     status,
+    // permision
+    } = body;
 
-    const nameExit = await this.usermodel.findOne({ name });
-    if (nameExit) {
-      throw new BadRequestException('email is elready exist');
-    }
+    
     const userExit = await this.usermodel.findOne({ email });
     if (userExit) {
       throw new BadRequestException('email is elready exist');
@@ -36,14 +33,14 @@ export class authService {
 
     const hashadPass = bcryptjs.hashSync(password as string, 8 as number);
     const user = await this.usermodel.create({
-      name,
-      age,
+      NationalId,
+      username,
       phone,
       email,
-      role,
-      gender,
-      password: hashadPass,
+      password:hashadPass,
       confirm_password,
+     status,
+    // permision
     });
     if (!user) {
       throw new BadRequestException('fail to add user');
