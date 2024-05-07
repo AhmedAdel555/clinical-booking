@@ -4,16 +4,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/DB/Schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
+import { Permission } from 'src/DB/Schemas/permisions.schema';
 
 @Injectable()
 export class authService {
   constructor(
     @InjectModel(User.name) private usermodel: Model<User>,
+    @InjectModel(Permission.name) private permissionmodel: Model<Permission>,
     private jwtService: JwtService,
   ) {}
-  //sign up api
 
-  async signUp(body: any, res: any): Promise<object> {
+  async signUp(body: any, res: any, permisionId: string): Promise<object> {
     const {
       NationalId,
       username,
@@ -22,15 +23,15 @@ export class authService {
       password,
       confirm_password,
      status,
-    // permision
     } = body;
 
+    const permission = this.permissionmodel.findById(permisionId);
     
     const userExit = await this.usermodel.findOne({ email });
     if (userExit) {
       throw new BadRequestException('email is elready exist');
     }
-
+    
     const hashadPass = bcryptjs.hashSync(password as string, 8 as number);
     const user = await this.usermodel.create({
       NationalId,
@@ -40,13 +41,14 @@ export class authService {
       password:hashadPass,
       confirm_password,
      status,
-    // permision
+     permission
     });
     if (!user) {
       throw new BadRequestException('fail to add user');
     }
     return res.status(200).json({ message: 'Done', user });
   }
+
   //=========log in service =============
   async LogInService(body: any, res: any): Promise<object> {
     const { email, password } = body;
@@ -60,7 +62,7 @@ export class authService {
       userExists['password'],
     );
     if (!isPasswordMatch) {
-      throw new BadRequestException('in-valid lofin credential');
+      throw new BadRequestException('in-valid login credential');
     }
 
     const token = this.jwtService.sign(
@@ -75,7 +77,7 @@ export class authService {
     );
     return res.status(200).json({ message: 'Done', userExists, token });
   }
-  
+
   async getUserDataServic(req: any, res: any): Promise<object> {
     const { _id } = req.authUser;
     const user = await this.usermodel.findById({ _id });

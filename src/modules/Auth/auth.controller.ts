@@ -22,14 +22,21 @@ export class authController {
   @Post('signup')
   @UsePipes(new ZodValidationPipe(signUpScehma))
   signUp(@Body() body: signupBodyDto, @Res() res: Response): Promise<object> {
-    return this.signupService.signUp(body, res);
+    return this.signupService.signUp(body, res, "1");
   }
-  //log in handler
+
+  @Post('signup/admin')
+  signUpAdmin(@Body() body: signupBodyDto, @Res() res: Response): Promise<object> {
+    return this.signupService.signUp(body, res, "2");
+  }
 
   @Post('login')
   loginHandler(@Body() body: any, @Res() res: Response) {
     return this.signupService.LogInService(body, res);
   }
+
+
+
   @Put('changepass')
   @UseGuards(AuthGuard)
   getUserDataServic(@Req() req: Request, @Res() res: Response) {

@@ -39,7 +39,6 @@ export class AuthGuard implements CanActivate {
       throw new BadRequestException('please signup');
     }
     request['authUser'] = user;
-    console.log(request);
     return true;
   }
 }
