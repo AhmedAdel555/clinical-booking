@@ -35,9 +35,7 @@ export class signupBodyDto {
   @IsString()
   @IsNotEmpty()
   confirm_password: string;
+  
   @IsBoolean()
   status:boolean;
- // @IsNotEmpty()
-  //permission:Permissions
-
 }

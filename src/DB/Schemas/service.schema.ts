@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Organization } from './organization.schema';
 import { Types } from 'mongoose';
 import { Catalog } from './catalog.schema';
+import { Agent } from './agent.schema';
 
 @Schema()
 export class Service {
@@ -44,6 +45,11 @@ export class Service {
     type: [Date],
   })
   booked_dates: Date[]
+
+  @Prop({
+    type: { type: Types.ObjectId, ref: 'Agent' },
+  })
+  agent: Agent;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);

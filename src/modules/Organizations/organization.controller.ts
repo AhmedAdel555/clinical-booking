@@ -3,6 +3,7 @@ import { organizationServices } from './organization.service';
 import { AuthGuard } from 'src/Guards/auth.guards';
 //import { RolesGuard } from 'src/Guards/roles.guards';
 import { Roles } from '../Auth/auth.roles';
+import { organizationBodyDto } from './organization.dto';
 
 @Controller({ path: '/org' })
 export class organizationController {
@@ -11,10 +12,10 @@ export class organizationController {
   //=========routes
   @Get('new')
   @UseGuards(AuthGuard)
- // @UseGuards(RolesGuard)
   @Roles('Admin')
-  newOrg() {
-    return this.orgServices.createOrg();
+  async newOrg(organizationDto: organizationBodyDto) {
+    await this.orgServices.createOrg(organizationDto);
+    return 'organization created';
   }
 }
  

@@ -12,11 +12,6 @@ export class Agent {
   organization: Organization;
 
   @Prop({
-    type: { type: Types.ObjectId, ref: 'Service' },
-  })
-  service: Service;
-
-  @Prop({
     type: String
   })
   name: string
