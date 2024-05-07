@@ -1,13 +1,10 @@
-import { Injectable } from "@nestjs/common";
-
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class organizationServices{
-    constructor(){
-    }
-    //==========API========
-    createOrg():string{
-        return "hello from new org"
-    }
-    
+export class organizationServices {
+  constructor() {}
+  //==========API========
+  createOrg(): string {
+    return 'hello from new org';
+  }
 }
