@@ -21,8 +21,8 @@ export class authController {
 
   @Post('signup')
   @UsePipes(new ZodValidationPipe(signUpScehma))
-  signUp(@Body() req: signupBodyDto, @Res() res: Response): Promise<object> {
-    return this.signupService.signUp(req, res);
+  signUp(@Body() body: signupBodyDto, @Res() res: Response): Promise<object> {
+    return this.signupService.signUp(body, res);
   }
   //log in handler
 
