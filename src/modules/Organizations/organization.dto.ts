@@ -1,5 +1,8 @@
 import {
+  IsArray,
   IsEnum,
+  IsMongoId,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -42,4 +45,12 @@ export class organizationBodyDto {
   @IsString()
   @IsOptional()
   Organization_Attachements: string;
+ @IsMongoId()
+ @IsNotEmpty()
+ admin:string
+@IsArray()
+ @IsMongoId()
+ @IsNotEmpty()
+ services:string
+  
 }

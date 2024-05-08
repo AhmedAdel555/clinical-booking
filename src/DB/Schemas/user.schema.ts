@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { boolean } from 'zod';
-import { Types } from 'mongoose';
+
 import { Permission } from './permisions.schema';
+import { Types } from 'mongoose';
 
 @Schema()
 export class User {
@@ -54,9 +55,11 @@ export class User {
   status: string;
 
   @Prop({
-    type: { type: Types.ObjectId, ref: 'Permission' }
+    
+    type: { type: Types.ObjectId, ref: 'Permission' },
+   
   })
-  permission: Permission;
+  permission:Permission;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

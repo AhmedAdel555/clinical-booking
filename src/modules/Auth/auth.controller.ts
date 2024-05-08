@@ -34,10 +34,7 @@ export class authController {
   loginHandler(@Body() body: any, @Res() res: Response) {
     return this.signupService.LogInService(body, res);
   }
-
-
-
-  @Put('changepass')
+  @Put('getuser')
   @UseGuards(AuthGuard)
   getUserDataServic(@Req() req: Request, @Res() res: Response) {
     return this.signupService.getUserDataServic(req, res);

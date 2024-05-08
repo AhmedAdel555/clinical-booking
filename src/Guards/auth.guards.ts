@@ -26,10 +26,8 @@ export class AuthGuard implements CanActivate {
       throw new BadRequestException('pleaee lognIn');
     }
 
-    if (!authorization.startsWith('clinic_')) {
-      throw new BadRequestException('wrong prefix');
-    }
-    const token = authorization.split('clinic_')[1];
+
+    const token = authorization.split(' ')[1];
     const decodedData = this._JwtService.verify(token, { secret: 'login' });
     if (!decodedData.id) {
       throw new BadRequestException('wrong token');

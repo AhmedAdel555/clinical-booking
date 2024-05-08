@@ -1,3 +1,4 @@
+import { Permission } from 'src/DB/Schemas/permisions.schema';
 import { z } from 'zod';
 
 export const signUpScehma = z
@@ -7,6 +8,7 @@ export const signUpScehma = z
     password: z.string(),
     confirm_password: z.string(),
     phone: z.number(),
+    permission:z.any()
    
   })
   .required()

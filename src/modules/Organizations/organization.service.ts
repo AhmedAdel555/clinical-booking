@@ -1,25 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Organization } from 'src/DB/Schemas/organization.schema';
-import { organizationBodyDto } from './organization.dto';
 import { Model } from 'mongoose';
+import { Organization } from 'src/DB/Schemas/organization.schema';
+
+
+
 
 @Injectable()
 export class organizationServices {
-  constructor(
-    @InjectModel(Organization.name)
-    private organizationmodel: Model<Organization>,
-  ) {}
-  
+  constructor(@InjectModel(Organization.name) private orgModel :Model<Organization>) {}
   //==========API========
-  async createOrg(organication: organizationBodyDto): Promise<void> {
-    const newOrganization = await this.organizationmodel.create({
-      name: organication.name,
-      Org_Status: organication.Org_Status,
-      Bank_account: organication.Bank_account,
-      License_ID: organication.License_ID,
-      Financial_Limit_From: organication.Financial_Limit_From,
-      Financial_Limit_TO: organication.Financial_Limit_TO,
-    })
+  async createOrg(body:any, res:any): Promise<object> {
+   const addorg=await this.orgModel.create(body)
+
+   if(!addorg){
+    throw new BadRequestException('no organization is added');
+   }
+      
+   return res.status(200).json({ message: 'Done', addorg });
+
+  return 
   }
+ 
 }
