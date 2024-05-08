@@ -11,7 +11,7 @@ export class authService {
     @InjectModel(User.name) private usermodel: Model<User>,
     private jwtService: JwtService,
   ) {}
-  //sign up api
+  //==========================sign up api
 
   async signUp(body: any, res: any): Promise<object> {
     const {
@@ -22,7 +22,7 @@ export class authService {
       password,
       confirm_password,
      status,
-    // permision
+     permission
     } = body;
 
     
@@ -40,8 +40,8 @@ export class authService {
       password:hashadPass,
       confirm_password,
      status,
-    // permision
-    });
+     permission:permission
+    })
     if (!user) {
       throw new BadRequestException('fail to add user');
     }
@@ -54,7 +54,7 @@ export class authService {
     if (!userExists) {
       throw new BadRequestException('in-valid login credential');
     }
-
+console.log(userExists)
     const isPasswordMatch = bcryptjs.compareSync(
       password,
       userExists['password'],
@@ -67,15 +67,17 @@ export class authService {
       {
         email: userExists['email'],
         id: userExists['_id'],
-        role: userExists['role'],
+       
+
       },
       {
         secret: 'login',
       },
+
     );
     return res.status(200).json({ message: 'Done', userExists, token });
   }
-  
+  //========================getUserDataServic====================
   async getUserDataServic(req: any, res: any): Promise<object> {
     const { _id } = req.authUser;
     const user = await this.usermodel.findById({ _id });

@@ -9,7 +9,10 @@ import {
   IS_NUMBER,
   IS_BOOLEAN,
   IsBoolean,
+  IsObject,
+  IsMongoId,
 } from 'class-validator';
+import { Permission } from 'src/DB/Schemas/permisions.schema';
 
 // dto, signup , body
 export class signupBodyDto {
@@ -37,7 +40,9 @@ export class signupBodyDto {
   confirm_password: string;
   @IsBoolean()
   status:boolean;
- // @IsNotEmpty()
-  //permission:Permissions
+
+  @IsMongoId()
+  
+  permission:Permission
 
 }

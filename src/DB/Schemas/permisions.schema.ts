@@ -10,6 +10,7 @@ export enum UserRole {
 export class Permission {
 
   @Prop({
+    required:true,
     enum: [UserRole.Admin, UserRole.User, UserRole.SuperAdmin],
     type: String,
     default: UserRole.User,
