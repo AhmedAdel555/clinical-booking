@@ -31,5 +31,16 @@ if (!catalog) {
 
 
 }
-////////////
+//=========get all catalogs===========
+async getAllCatalog(body:any, res:any){
+ 
+  const catalogExit = await this.catalogmodel.find();
+ // console.log(catalogExit)
+  if (!catalogExit) {
+    throw new BadRequestException('there,s is no catalogs');
+  }
+  return res.status(200).json({ message: 'Done', catalogExit });
+}
+//=========  
+
 }

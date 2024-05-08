@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, Res, UseGuards, UsePipes } from "@nestjs/common";
 import { catsrvice } from "./catalog.service";
 import { Request, Response } from "express";
 import { catalogBodyDto } from "./catalog.dto";
@@ -19,5 +19,10 @@ export class catalogController{
     @UseGuards(AuthGuard)
     addCatalog(@Body() body:catalogBodyDto  , @Req() req :Request, @Res() res:Response){
         return this.catalogService.addCatalog(body,req,res)
+    }
+    /////////get all catalogs route 
+    @Get('getall')
+    getallCatalog(@Body() body:any ,   @Res() res:Response){
+        return this.catalogService.getAllCatalog(body,res)
     }
 }

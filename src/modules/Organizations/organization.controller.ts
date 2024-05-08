@@ -1,6 +1,12 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Res, UseGuards, UsePipes } from '@nestjs/common';
 import { organizationServices } from './organization.service';
+
+import { organizationBodyDto } from './organization.dto';
+
 import { AuthGuard } from 'src/Guards/auth.guards';
+import { Response } from 'express';
+import { orgSchema } from './org.validationSchema';
+import { ZodValidationPipe } from 'src/pipes/validation.pipe';
 //import { RolesGuard } from 'src/Guards/roles.guards';
 
 
@@ -10,11 +16,12 @@ export class organizationController {
 
   //=========routes
   @Get('new')
+
   @UseGuards(AuthGuard)
- // @UseGuards(RolesGuard)
-  //@Roles('Admin')
-  newOrg() {
-    return this.orgServices.createOrg();
+  @UsePipes(new ZodValidationPipe(orgSchema))
+  newOrg(@Body() body :organizationBodyDto, @Res() res:Response) {
+    return this.orgServices.createOrg(body , res)
   }
+  
 }
  

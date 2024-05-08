@@ -8,7 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/DB/Schemas/user.schema';
-import { Roles } from 'src/modules/Auth/auth.roles';
+
 /*
 @Injectable()
 export class RolesGuard implements CanActivate {
