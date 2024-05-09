@@ -2,41 +2,36 @@ import {
   Body,
   Controller,
   Post,
-  Put,
-  Req,
-  Res,
   UseGuards,
-  UsePipes,
 } from '@nestjs/common';
 import { authService } from './auth.service';
-import { Request, Response } from 'express';
-import { AuthGuard } from 'src/Guards/auth.guards';
-import { ZodValidationPipe } from 'src/pipes/validation.pipe';
-import { signUpScehma } from './auth.validationSchema';
-import { signupBodyDto } from './auth.dto';
+import { AuthGuard } from 'src/Guards/auth.guard';
+import { SignUpDto } from './dto/signup.dto';
+import { SignInDto } from './dto/signin.dto';
+import { Role } from 'src/decorators/roles.decorator';
+import { RoleGuard } from 'src/Guards/role.guard';
 
 @Controller({ path: '/auth' })
 export class authController {
   constructor(private readonly signupService: authService) {}
 
+
   @Post('signup')
-  @UsePipes(new ZodValidationPipe(signUpScehma))
-  signUp(@Body() body: signupBodyDto, @Res() res: Response): Promise<object> {
-    return this.signupService.signUp(body, res, "1");
+  async signUp(@Body() signUpDTO: SignUpDto) {
+    await this.signupService.signUp(signUpDTO, "User");
+    return { message: "User Successfully Created"};
   }
 
+  @Role('Super Admin')
+  @UseGuards(AuthGuard, RoleGuard)
   @Post('signup/admin')
-  signUpAdmin(@Body() body: signupBodyDto, @Res() res: Response): Promise<object> {
-    return this.signupService.signUp(body, res, "2");
+  async signUpAdmin(@Body() signUpDTO: SignUpDto) {
+    await this.signupService.signUp(signUpDTO, "Admin");
+    return { message: "User Successfully Created"};
   }
 
   @Post('login')
-  loginHandler(@Body() body: any, @Res() res: Response) {
-    return this.signupService.LogInService(body, res);
-  }
-  @Put('getuser')
-  @UseGuards(AuthGuard)
-  getUserDataServic(@Req() req: Request, @Res() res: Response) {
-    return this.signupService.getUserDataServic(req, res);
+  async loginHandler(@Body() signInDto: SignInDto) {
+    return await this.signupService.logIn(signInDto);
   }
 }

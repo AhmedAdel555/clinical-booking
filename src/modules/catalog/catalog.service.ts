@@ -1,46 +1,32 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Catalog } from "src/DB/Schemas/catalog.schema";
-
-
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Catalog } from 'src/DB/Schemas/catalog.schema';
+import { CatalogBodyDto } from './dto/catalog.dto';
 
 @Injectable()
-export class catsrvice{
-constructor(
-    @InjectModel(Catalog.name) private catalogmodel:Model<Catalog>
+export class catsrvice {
 
-){}
-//==========add catalog===========
-async addCatalog(body:any ,req , res:any){
-const {catalog_name}=body
-//console.log(req)
-const user =req['authUser']
-//console.log(user)
+  constructor(
+    @InjectModel(Catalog.name) private catalogmodel: Model<Catalog>,
+  ) {}
 
-const catalogExit = await this.catalogmodel.findOne({ catalog_name });
-if (catalogExit) {
-  throw new BadRequestException('email is elready exist');
-}
-const catalog = await this.catalogmodel.create({catalog_name})
 
-if (!catalog) {
-    throw new BadRequestException('fail to add user');
+  async createCatalog(body: CatalogBodyDto): Promise<Catalog> {
+    const { catalog_name } = body;
+
+    const catalogExist = await this.catalogmodel.findOne({ catalog_name });
+    if (catalogExist) {
+      throw new BadRequestException('Catalog name is elready exist');
+    }
+
+    const catalog = new this.catalogmodel({ catalog_name });
+
+    return catalog.save()
   }
-  return res.status(200).json({ message: 'Done', catalog });
 
-
-}
-//=========get all catalogs===========
-async getAllCatalog(body:any, res:any){
- 
-  const catalogExit = await this.catalogmodel.find();
- // console.log(catalogExit)
-  if (!catalogExit) {
-    throw new BadRequestException('there,s is no catalogs');
+  async findAll(): Promise<Catalog[]> {
+    return this.catalogmodel.find().exec();
   }
-  return res.status(200).json({ message: 'Done', catalogExit });
-}
-//=========  
-
+  
 }

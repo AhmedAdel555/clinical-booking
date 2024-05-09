@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { boolean } from 'zod';
-
-import { Permission } from './permisions.schema';
 import { Types } from 'mongoose';
+import { Organization } from './organization.schema';
 
 @Schema()
 export class User {
@@ -42,24 +40,22 @@ export class User {
     required: true,
   })
   password: string;
-  @Prop({
-    type: String,
-    required: true,
-  })
-  confirm_password: string;
 
   @Prop({
-    type: boolean,
+    type: String,
     required: true,
   })
   status: string;
 
   @Prop({
-    
-    type: { type: Types.ObjectId, ref: 'Permission' },
-   
+    type: String,
   })
-  permission:Permission;
+  role:string;
+
+  @Prop({
+    type: { type: Types.ObjectId, ref: 'Organization' }
+  })
+  organizationId: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

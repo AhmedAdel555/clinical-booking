@@ -10,7 +10,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class organizationBodyDto {
+export class OrganizationDto {
   @IsString()
   @MinLength(3, {
     message: 'your name must be at leaset 3 chars',
@@ -21,36 +21,24 @@ export class organizationBodyDto {
   name: string;
 
   @IsNumber()
-  id: number;
-  @IsNumber()
+  @IsNotEmpty()
   License_ID: number;
+
   @IsString()
-  @IsEnum(['online', 'offline'])
+  @IsEnum(['Active', 'InActive'])
   @IsOptional()
   Org_Status: string;
-  @IsEnum(['Banking', 'Finance', 'Wholesale'])
-  @IsOptional()
-  Organization_Type: string;
-  @IsNumber()
-  @IsOptional()
-  Financial_Limit_From: number;
 
   @IsNumber()
   @IsOptional()
-  Financial_Limit_TO: number;
+  Financial_Limit_From?: number;
 
   @IsNumber()
   @IsOptional()
-  Bank_account: number;
-  @IsString()
+  Financial_Limit_TO?: number;
+
+  @IsNumber()
   @IsOptional()
-  Organization_Attachements: string;
- @IsMongoId()
- @IsNotEmpty()
- admin:string
-@IsArray()
- @IsMongoId()
- @IsNotEmpty()
- services:string
-  
+  Bank_account?: number;
+
 }

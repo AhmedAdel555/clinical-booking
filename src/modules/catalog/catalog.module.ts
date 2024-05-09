@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { Models } from "src/DB/Schemas/models.generations";
+import { Models } from "src/DB/models.generations";
 import { catalogController } from "./catalog.controller";
 import { catsrvice } from "./catalog.service";
 import { JwtService } from "@nestjs/jwt";

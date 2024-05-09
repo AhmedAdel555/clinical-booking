@@ -4,12 +4,7 @@ import { Types } from 'mongoose';
 import { Service } from './service.schema';
 
 @Schema()
-export class Agent {
-
-  @Prop({
-    type: { type: Types.ObjectId, ref: 'Organization' },
-  })
-  organization: Organization;
+export class ServiceAgent {
 
   @Prop({
     type: String
@@ -17,9 +12,9 @@ export class Agent {
   name: string
 
   @Prop({
-    type: String
+    type: Number
   })
-  mobile: string
+  mobile: number
 
   @Prop({
     type: String
@@ -40,7 +35,12 @@ export class Agent {
     type: [Date],
   })
   booked_dates: Date[]
+
+  @Prop({
+    type: { type: Types.ObjectId, ref: 'Service' }
+  })
+  serviceId: string
 }
 
-export const AgentSchema = SchemaFactory.createForClass(Agent);
+export const ServiceAgentSchema = SchemaFactory.createForClass(ServiceAgent);
 

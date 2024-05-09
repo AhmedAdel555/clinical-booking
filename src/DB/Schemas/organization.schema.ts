@@ -1,7 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose'; 
-import { User } from './user.schema';
-import { Service } from './service.schema';
 
 @Schema()
 export class Organization {
@@ -21,9 +18,8 @@ export class Organization {
   
   @Prop({
     type: String,
-    enum: ['online', 'offline'],
-
-    default: 'online',
+    enum: ['Active', 'InActive'],
+    default: 'Active',
   })
   Org_Status: string;
 
@@ -41,14 +37,6 @@ export class Organization {
     type: Number,
   })
   Bank_account: number;
-
-  @Prop({
-    type: { type: Types.ObjectId, ref: 'User' }
-  })
-  admin: User
-  @Prop({
-    type:[{quantity:{type:Number}, service:{type:Types.ObjectId}}]
-  })
-  services: { quantity: number; service: Service }[]; 
 }
-export const organizationSchema = SchemaFactory.createForClass(Organization);
+
+export const OrganizationSchema = SchemaFactory.createForClass(Organization);
