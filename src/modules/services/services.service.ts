@@ -18,15 +18,16 @@ export class ServicesService {
          service_description: service.service_description,
          service_fees_amount:  service.service_fees_amount,
          service_fees_description: service.service_fees_description,
-         catalogId: service.catalog_id,
-         organizationId: service.organizationId
+         catalog: service.catalog_id,
+         organization: "663e4c135accec015e83fd7d" // it will updated
     })
 
     return newService.save()
   }
 
   async findCatalogServices(catalogId:string): Promise<Service[]>{
-    return this.serviceModel.find({ catalogId })
-    .populate('organizationId', ['name', 'License_ID', 'Org_Status']); // Populate organizationId with desired fields
+    return this.serviceModel.find({ catalog: catalogId })
+    .populate('organization', ['name'])
+    .populate('catalog', ['catalog_name']);
   }
 }

@@ -5,8 +5,6 @@ import {
   IsNumber,
   IsNotEmpty,
   Validate,
-  IsMongoId,
-  IsOptional,
 } from 'class-validator';
 
 
@@ -26,7 +24,7 @@ export class IsPasswordEqualTo implements ValidatorConstraintInterface {
   }
 }
 
-export class SignUpDto {
+export class SignUpDTO {
 
   @IsNumber()
   @IsNotEmpty()
@@ -57,9 +55,5 @@ export class SignUpDto {
   @IsNotEmpty()
   @Validate(IsPasswordEqualTo, ['password'])
   confirm_password: string;
-
-  @IsMongoId()
-  @IsOptional()
-  organizationId?: string
 
 }

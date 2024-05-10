@@ -13,8 +13,6 @@ export class catalogController{
 
     constructor(private readonly catalogService:catsrvice){}
 
-    @Role("Super Admin")
-    @UseGuards(AuthGuard, RoleGuard)
     @Post()
     async createCatalog(@Body() catalogBodyDto:CatalogBodyDto){
         await this.catalogService.createCatalog(catalogBodyDto)

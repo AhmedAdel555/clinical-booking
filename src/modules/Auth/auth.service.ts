@@ -1,9 +1,11 @@
 import * as bcryptjs from 'bcryptjs';
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from './dto/signup.dto';
+import { SignUpDTO } from './dto/signup.dto';
 import { UsersService } from '../users/users.service';
 import { SignInDto } from './dto/signin.dto';
+import { SignUpAdminDTO } from './dto/signup-admin.dto';
+import { SignUpAgentDTO } from './dto/signup-agent.dto';
 
 @Injectable()
 export class authService {
@@ -12,7 +14,7 @@ export class authService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(signUpDTO: SignUpDto, role: string): Promise<void> {
+  async signUp(signUpDTO: SignUpDTO): Promise<void> {
     
     const userExit = await this.userService.findByEmail(signUpDTO.email);
     if (userExit) {
@@ -23,7 +25,47 @@ export class authService {
 
     signUpDTO.password = hashadPass;
 
-    const user = await this.userService.createUser(signUpDTO, role)
+    const user = await this.userService.createUser(signUpDTO)
+
+    if (!user) {
+      throw new InternalServerErrorException('fail to add user');
+    }
+    
+  }
+
+  async signUpAdmin(signUpDTO: SignUpAdminDTO, superAdminId: string): Promise<void> {
+    
+    const userExit = await this.userService.findByEmail(signUpDTO.email);
+
+    if (userExit) {
+      throw new BadRequestException('email is elready exist');
+    }
+    
+    const hashadPass = bcryptjs.hashSync(signUpDTO.password as string, 8 as number);
+
+    signUpDTO.password = hashadPass;
+
+    const user = await this.userService.createAdmin(signUpDTO, superAdminId)
+
+    if (!user) {
+      throw new InternalServerErrorException('fail to add user');
+    }
+    
+  }
+
+  async signUpAgent(signUpDTO: SignUpAgentDTO, admin: string): Promise<void> {
+    
+    const userExit = await this.userService.findByEmail(signUpDTO.email);
+
+    if (userExit) {
+      throw new BadRequestException('email is elready exist');
+    }
+    
+    const hashadPass = bcryptjs.hashSync(signUpDTO.password as string, 8 as number);
+
+    signUpDTO.password = hashadPass;
+
+    const user = await this.userService.createAgent(signUpDTO, admin)
 
     if (!user) {
       throw new InternalServerErrorException('fail to add user');

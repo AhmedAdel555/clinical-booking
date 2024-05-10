@@ -17,7 +17,6 @@ export class organizationServices {
        
     const createdOrganization = new this.orgModel({
       name: organizationBodyDto.name,
-      Org_Status: organizationBodyDto.Org_Status,
       Bank_account: organizationBodyDto.Bank_account,
       License_ID: organizationBodyDto.License_ID,
       Financial_Limit_From: organizationBodyDto.Financial_Limit_From,
@@ -26,7 +25,7 @@ export class organizationServices {
     return createdOrganization.save();
   }
 
-  
-
- 
+  async findAllOrganizations(){
+    return this.orgModel.find().exec();
+  }
 }

@@ -3,9 +3,6 @@ import { IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-val
 export class CreateServiceDTO{
 
   @IsMongoId()
-  organizationId: String;
-
-  @IsMongoId()
   catalog_id: string;
 
   @IsString()
@@ -20,7 +17,7 @@ export class CreateServiceDTO{
   @IsNotEmpty()
   service_fees_amount: number;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   service_fees_description: string
 }

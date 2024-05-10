@@ -1,17 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
+import { Organization } from './organization.schema';
+import { Catalog } from './catalog.schema';
 
 @Schema()
 export class Service {
-  @Prop({
-    type: { type: Types.ObjectId, ref: 'Organization' },
-  })
-  organizationId: string;
+  @Prop(
+    { type: Types.ObjectId, ref: 'Organization' },
+  )
+  organization: Organization;
 
-  @Prop({
-    type: { type: Types.ObjectId, ref: 'Catalog' },
-  })
-  catalogId: string;
+  @Prop(
+    { type: Types.ObjectId, ref: 'Catalog' },
+  )
+  catalog: Catalog;
 
   @Prop({
     type: String,

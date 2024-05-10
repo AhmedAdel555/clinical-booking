@@ -24,11 +24,6 @@ export class OrganizationDto {
   @IsNotEmpty()
   License_ID: number;
 
-  @IsString()
-  @IsEnum(['Active', 'InActive'])
-  @IsOptional()
-  Org_Status: string;
-
   @IsNumber()
   @IsOptional()
   Financial_Limit_From?: number;

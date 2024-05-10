@@ -13,14 +13,13 @@ export class catsrvice {
 
 
   async createCatalog(body: CatalogBodyDto): Promise<Catalog> {
-    const { catalog_name } = body;
 
-    const catalogExist = await this.catalogmodel.findOne({ catalog_name });
+    const catalogExist = await this.catalogmodel.findOne({ catalog_name: body.catalogName });
     if (catalogExist) {
       throw new BadRequestException('Catalog name is elready exist');
     }
 
-    const catalog = new this.catalogmodel({ catalog_name });
+    const catalog = new this.catalogmodel({ catalog_name: body.catalogName });
 
     return catalog.save()
   }
