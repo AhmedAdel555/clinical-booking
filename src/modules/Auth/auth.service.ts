@@ -106,4 +106,5 @@ export class authService {
     
     return { message: 'Done', user: userExists, token };
   }
+  
 }
